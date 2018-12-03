@@ -2,9 +2,12 @@ const path = require('path');
 
 
 module.exports = {
-  entry: './js/index.js',
+  entry: {
+    battle: './src/game/js/app.js',
+    // search: './src/search.js'
+  },
   output: {
-    filename: 'bundle.js',
+    filename: '[name].js',
     path: path.resolve(`${__dirname}`, 'dist'),
   },
   module: {
