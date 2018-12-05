@@ -1,3 +1,5 @@
+/* eslint-disable no-undef */
+/* eslint-disable no-alert */
 import Sprite from './sprite';
 import makeASound from './musicHandler';
 
@@ -31,27 +33,33 @@ export default class FightInterface {
     const orkSpriteLocation = 'img/orkSprite.png';
     const orkBody = {
       pos: [0, 0],
-      sprite: new Sprite(orkSpriteLocation, [220 * FightInterface.getRandomInt(0, 3), 935], [220, 240]),
+      sprite:
+          new Sprite(orkSpriteLocation, [220 * FightInterface.getRandomInt(0, 3), 935], [220, 240]),
     };
     const leftLeg = {
       pos: [0, 0],
-      sprite: new Sprite(orkSpriteLocation, [85 * FightInterface.getRandomInt(0, 3), 0], [85, 120]),
+      sprite:
+          new Sprite(orkSpriteLocation, [85 * FightInterface.getRandomInt(0, 3), 0], [85, 120]),
     };
     const rightLeg = {
       pos: [0, 0],
-      sprite: new Sprite(orkSpriteLocation, [85 * FightInterface.getRandomInt(0, 3), 120], [85, 120]),
+      sprite:
+          new Sprite(orkSpriteLocation, [85 * FightInterface.getRandomInt(0, 3), 120], [85, 120]),
     };
     const rightHand = {
       pos: [0, 0],
-      sprite: new Sprite(orkSpriteLocation, [219 * FightInterface.getRandomInt(0, 3), 240], [219, 282]),
+      sprite:
+          new Sprite(orkSpriteLocation, [219 * FightInterface.getRandomInt(0, 3), 240], [219, 282]),
     };
     const leftHand = {
       pos: [0, 0],
-      sprite: new Sprite(orkSpriteLocation, [165 * FightInterface.getRandomInt(0, 3), 720], [165, 210]),
+      sprite:
+          new Sprite(orkSpriteLocation, [165 * FightInterface.getRandomInt(0, 3), 720], [165, 210]),
     };
     const head = {
       pos: [0, 0],
-      sprite: new Sprite(orkSpriteLocation, [220 * FightInterface.getRandomInt(0, 3), 525], [220, 195]),
+      sprite:
+          new Sprite(orkSpriteLocation, [220 * FightInterface.getRandomInt(0, 3), 525], [220, 195]),
     };
     return [rightLeg, leftLeg, rightHand, orkBody, head, leftHand];
   }
