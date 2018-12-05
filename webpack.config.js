@@ -3,13 +3,15 @@ const path = require('path');
 
 module.exports = {
   entry: {
-    battle: './src/game/js/app.js',
+    battle: './src/screen/game/js/app.js',
     // search: './src/search.js'
   },
   output: {
     filename: '[name].js',
     path: path.resolve(`${__dirname}`, 'dist'),
   },
+  mode: 'development',
+  devtool: 'inline-source-map',
   module: {
     rules: [
       {
@@ -21,6 +23,12 @@ module.exports = {
             presets: ['@babel/preset-env'],
           },
         },
+      },
+      {
+        test: /\.(ogg|wav)$/,
+        use: [
+          'file-loader',
+        ],
       },
       // {
       //   test: /\.css$/,

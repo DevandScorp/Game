@@ -25,14 +25,22 @@ function init() {
 }
 
 resourceHandler.load([
-  'img/sprites.png',
-  'img/terrain.png',
-  'img/knights.png',
+  'img/heal.png',
+  'img/explosion.png',
+  'img/damage.png',
+  'img/knight.png',
   'img/fire.png',
-  'img/knights_attack.png',
-  'img/ork_sprite.png',
+  'img/knightAttack.png',
+  'img/orkSprite.png',
 ]);
 resourceHandler.onReady(init);
 window.addEventListener('click', () => {
   game.makeShot();
+}, false);
+window.addEventListener('contextmenu', (e) => {
+  e.preventDefault();
+  game.attackHero();
+}, false);
+window.addEventListener('keydown', (e) => {
+  if (e.code === 'Space') { game.healHero(); }
 }, false);
