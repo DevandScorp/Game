@@ -3,6 +3,7 @@
 import FightInterface from './fightInterface';
 import resourceHandler from './resourceHandler';
 import getTask from '../../../components/simpleMath/createTask';
+import getDictionary from '../../../components/translateEngToRU/translate';
 
 const canvas = document.createElement('canvas');
 canvas.width = window.innerWidth * 0.75;
@@ -38,18 +39,49 @@ resourceHandler.load([
 ]);
 resourceHandler.onReady(init);
 
-document.getElementById('task').onclick = () => {
+document.getElementById('arithmetics').onclick = () => {
+  localStorage.setItem('task', 'arithmetics');
   let name;
   let first;
   let second;
   let result;
   let sign;
-  [name, first, second, sign, result] = getTask();
+  let taskNote;
+  [name, first, second, sign, result, taskNote] = getTask();
   document.getElementById('taskModelLabel').innerHTML = `${name}${first}${sign}${second}`;
   document.getElementById('hidden-result').value = `${result}`;
+  document.getElementById('note').innerHTML = `${taskNote}`;
+};
+document.getElementById('translate').onclick = () => {
+  localStorage.setItem('task', 'translate');
+  let taskNote;
+  let taskName;
+  let dictionary;
+  [taskNote, taskName, dictionary] = getDictionary();
+  console.log(dictionary);
+  dictionary.then((res) => {
+    let i = FightInterface.getRandomInt(0, res.dictionary.words.length);
+    let word = res.dictionary.words[i];
+    document.getElementById('taskModelLabel').innerHTML = `${taskName}${word.english}`;
+    let second = word.second ? word.second : '';
+    document.getElementById('hidden-result').value = `${word.first},${second}`;
+  });
+  document.getElementById('note').innerHTML = `${taskNote}`;
 };
 document.getElementById('submit').onclick = () => {
-  if (document.getElementById('hidden-result').value === document.getElementById('exampleInputEmail1').value) {
+  let solved = false;
+  switch (localStorage.getItem('task')) {
+    case 'arithmetics':
+      solved = (document.getElementById('hidden-result').value === document.getElementById('answer').value);
+      break;
+    case 'translate':
+      solved = document.getElementById('hidden-result').value.split(',')
+        .filter(a => a).includes(document.getElementById('answer').value.toLowerCase());
+      break;
+    default:
+      break;
+  }
+  if (solved) {
     game.makeShot();
   } else {
     game.attackHero();

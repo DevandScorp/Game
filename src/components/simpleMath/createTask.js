@@ -6,6 +6,7 @@ export default function getTask() {
   const b = Sprite.getRandomInt(1, 10);
   const sign = signs[Sprite.getRandomInt(0, signs.length)];
   const taskName = 'Solve task: ';
+  const taskNote = 'Note: for division you have to write first number after comma';
   let result = 0;
   switch (sign) {
     case '*':
@@ -23,5 +24,5 @@ export default function getTask() {
     default:
       break;
   }
-  return [taskName, a, b, sign, result];
+  return [taskName, a, b, sign, result, taskNote];
 }

@@ -29,7 +29,8 @@
           <div class="modal-body">
             <div class="btn-toolbar" role="toolbar">
                 <div class="btn-group mr-2" role="group">
-                  <button type="button" class="btn btn-success" id = "task" data-toggle="modal" data-dismiss="modal" data-target="#taskModel">Arithmetic</button>
+                  <button type="button" class="btn btn-success" id = "arithmetics" data-toggle="modal" data-dismiss="modal" data-target="#taskModel">Arithmetic</button>
+                  <button type="button" class="btn btn-success" id = "translate" data-toggle="modal" data-dismiss="modal" data-target="#taskModel">Translate</button>
                 </div>
             </div>
           </div>
@@ -46,9 +47,10 @@
               </button>
           </div>
           <div class="modal-body">
+            <small id = "note"></small>
             <div class="form-group">
               <label for="exampleInputEmail1">Input your answer</label>
-              <input type="text" placeholder="0" class="form-control" id="exampleInputEmail1">
+              <input type="text" placeholder="0" class="form-control" id="answer">
               <input type="hidden" id = "hidden-result">
             </div>
             <button type="submit" id = "submit" class="btn btn-primary"  data-dismiss="modal">Submit</button>
