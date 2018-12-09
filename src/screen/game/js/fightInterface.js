@@ -2,6 +2,7 @@
 /* eslint-disable no-alert */
 import Sprite from './sprite';
 import makeASound from './musicHandler';
+import moveHealth from './changeHealthBar';
 
 export default class FightInterface {
   constructor(canvas, ctx, resources) {
@@ -11,22 +12,25 @@ export default class FightInterface {
     this.bulletSpeed = 500;
     this.bullets = [];
     this.enemy = FightInterface.getEnemySprites();
-    this.player = {
-      pos: [0, 0],
-      sprite: new Sprite('img/knight.png', [0, 0], [256, 256], 10, [0, 1, 2, 3, 4, 5, 6]),
-    };
     this.isDamaged = false;
     this.isHealed = false;
+
+    this.player = {
+      sprite: new Sprite('img/knight.png', [0, 0], [256, 256], 10, [0, 1, 2, 3, 4, 5, 6]),
+    };
+    this.player.pos = [25, this.canvas.height / 2 - this.player.sprite.size[0] / 2];
     this.damage = {
-      pos: [0, 0],
+      pos: [25, this.canvas.height / 2 - this.player.sprite.size[0] / 2],
       sprite: new Sprite('img/explosion.png', [0, 0], [256, 256], 15, [0, 1, 2, 3, 4, 5, 6]),
     };
     this.heal = {
-      pos: [0, 0],
+      pos: [25, this.canvas.height / 2 - this.player.sprite.size[0] / 2],
       sprite: new Sprite('img/heal.png', [0, 0], [256, 256], 10, [0, 1, 2, 3, 4, 5, 6]),
     };
     this.orkHealth = 100;
     this.heroHealth = 100;
+    this.heroClassElement = document.querySelector('.heroLife');
+    this.orkClassElement = document.querySelector('.orkLife');
   }
 
   static getEnemySprites() {
@@ -86,6 +90,7 @@ export default class FightInterface {
   attackHero() {
     this.heroHealth -= 25;
     console.log(this.heroHealth);
+    moveHealth(this.heroClassElement, this.heroHealth);
     this.isDamaged = true;
     this.player.sprite = new Sprite('img/damage.png', [0, 0], [256, 256], 15, [0, 1, 2, 3, 4, 5]);
     setTimeout(() => {
@@ -98,6 +103,7 @@ export default class FightInterface {
   healHero() {
     if (this.heroHealth !== 100) {
       this.heroHealth += 25;
+      moveHealth(this.heroClassElement, this.heroHealth);
       console.log(this.heroHealth);
     }
     this.isHealed = true;
@@ -121,6 +127,7 @@ export default class FightInterface {
       if (this.bullets[i].pos[0] >= this.enemy[2].pos[0]) {
         this.orkHealth -= 25;
         console.log(this.orkHealth);
+        moveHealth(this.orkClassElement, this.orkHealth);
         this.bullets.splice(i, 1);
         i -= 1;
       }
@@ -178,6 +185,11 @@ export default class FightInterface {
     const bodySizeY = this.enemy[3].sprite.size[1];
     const canvasWidth = this.canvas.width;
     const canvasHeight = this.canvas.height;
+
+    this.orkClassElement.style.width = '50%';
+    this.orkClassElement.innerHTML = '100%';
+    this.heroClassElement.style.width = '50%';
+    this.heroClassElement.innerHTML = '100%';
 
     this.enemy[3].pos = [canvasWidth - bodySizeX - 200, canvasHeight / 2 - bodySizeY / 2];
     this.enemy[1].pos = [canvasWidth - bodySizeX - 180, canvasHeight / 2 - bodySizeY / 2 + 180];

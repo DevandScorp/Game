@@ -1,9 +1,14 @@
 html, body {
     margin: 0;
     padding: 0;
-    background-color: #151515;
 }
-
+body {
+    background: url("./../img/game_background_4.png") no-repeat;
+    -moz-background-size: 100%; /* Firefox 3.6+ */
+    -webkit-background-size: 100%; /* Safari 3.1+ и Chrome 4.0+ */
+    -o-background-size: 100%; /* Opera 9.6+ */
+    background-size: 100%;
+}
 canvas {
     display: block;
     margin: auto;
@@ -13,4 +18,21 @@ canvas {
     bottom: 0;
     left: 0;
     right: 0;
+}
+.lives{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+}
+.orkLife, .heroLife {
+    width: 50%;
+    border-radius:5px;
+    border:2px solid #ea9194;
+    height: 50px;
+    background-color: #db363c;
+    text-align: center;
+    padding-top: 10px;
+    line-height: 30px;
+    color: white;
+    box-sizing: border-box;
 }
