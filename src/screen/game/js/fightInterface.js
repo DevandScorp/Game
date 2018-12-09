@@ -89,7 +89,6 @@ export default class FightInterface {
 
   attackHero() {
     this.heroHealth -= 25;
-    console.log(this.heroHealth);
     moveHealth(this.heroClassElement, this.heroHealth);
     this.isDamaged = true;
     this.player.sprite = new Sprite('img/damage.png', [0, 0], [256, 256], 15, [0, 1, 2, 3, 4, 5]);
@@ -104,7 +103,6 @@ export default class FightInterface {
     if (this.heroHealth !== 100) {
       this.heroHealth += 25;
       moveHealth(this.heroClassElement, this.heroHealth);
-      console.log(this.heroHealth);
     }
     this.isHealed = true;
     setTimeout(() => {
@@ -126,7 +124,6 @@ export default class FightInterface {
       this.bullets[i].sprite.update(dt);
       if (this.bullets[i].pos[0] >= this.enemy[2].pos[0]) {
         this.orkHealth -= 25;
-        console.log(this.orkHealth);
         moveHealth(this.orkClassElement, this.orkHealth);
         this.bullets.splice(i, 1);
         i -= 1;
@@ -186,9 +183,9 @@ export default class FightInterface {
     const canvasWidth = this.canvas.width;
     const canvasHeight = this.canvas.height;
 
-    this.orkClassElement.style.width = '50%';
+    this.orkClassElement.style.width = '100%';
     this.orkClassElement.innerHTML = '100%';
-    this.heroClassElement.style.width = '50%';
+    this.heroClassElement.style.width = '100%';
     this.heroClassElement.innerHTML = '100%';
 
     this.enemy[3].pos = [canvasWidth - bodySizeX - 200, canvasHeight / 2 - bodySizeY / 2];
