@@ -28,7 +28,8 @@
     "lodash": "^4.17.11",
     "popper.js": "^1.14.6",
     "style-loader": "^0.23.1",
-    "webpack-cli": "^3.1.2"
+    "webpack-cli": "^3.1.2",
+    "webpack-jquery-ui": "^2.0.1"
   },
   "devDependencies": {
     "@babel/core": "^7.1.6",

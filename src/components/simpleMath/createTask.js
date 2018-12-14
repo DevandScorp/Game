@@ -19,7 +19,7 @@ export default function getTask() {
       result = a + b;
       break;
     case '/':
-      result = (a / b).toFixed(1);
+      result = (`${a / b}`).substring(0, (`${a / b}`).indexOf('.') + 2);
       break;
     default:
       break;
