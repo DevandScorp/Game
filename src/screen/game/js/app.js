@@ -2,6 +2,8 @@
 /* eslint-disable prefer-destructuring */
 /* eslint-disable prefer-const */
 /* eslint-disable no-undef */
+import 'bootstrap';
+import 'bootstrap/dist/css/bootstrap.min.css';
 import FightInterface from './fightInterface';
 import resourceHandler from './resourceHandler';
 import getTask from '../../../components/simpleMath/createTask';
@@ -22,6 +24,15 @@ document.body.appendChild(canvas);
 
 const ctx = canvas.getContext('2d');
 const game = new FightInterface(canvas, ctx, resourceHandler);
+const blueFireSpritePath = 'img/fire.png';
+const redFireSpritePath = 'img/fireRed.png';
+const pinkFireSpritePath = 'img/firePink.png';
+
+/** Ввод имени при загрузке страницы */
+$(document).ready(() => {
+  console.log('ready');
+  $('#nickName').modal('show');
+});
 
 let lastTime = 0;
 function main() {
@@ -44,12 +55,14 @@ resourceHandler.load([
   'img/damage.png',
   'img/knight.png',
   'img/fire.png',
+  'img/firePink.png',
+  'img/fireRed.png',
   'img/knightAttack.png',
   'img/orkSprite.png',
 ]);
 resourceHandler.onReady(init);
 /** Tasks handlers */
-document.getElementById('arithmetics').onclick = () => {
+$('#arithmetics').click(() => {
   localStorage.setItem('task', 'arithmetics');
   let name;
   let first;
@@ -59,8 +72,8 @@ document.getElementById('arithmetics').onclick = () => {
   let taskNote;
   [name, first, second, sign, result, taskNote] = getTask();
   setInfo(`${name}${first}${sign}${second}`, `${result}`, `${taskNote}`);
-};
-document.getElementById('translate').onclick = () => {
+});
+$('#translate').click(() => {
   localStorage.setItem('task', 'translate');
   let taskNote;
   let taskName;
@@ -72,8 +85,8 @@ document.getElementById('translate').onclick = () => {
     let second = word.second ? word.second : '';
     setInfo(`${taskName}${word.english}`, `${word.first},${second}`, `${taskNote}`);
   });
-};
-document.getElementById('listening').onclick = () => {
+});
+$('#listening').click(() => {
   localStorage.setItem('task', 'listening');
   let taskNote;
   let taskName;
@@ -86,12 +99,12 @@ document.getElementById('listening').onclick = () => {
     setInfo(`${taskName}`, `${word}`, `${taskNote}`);
     const utterThis = new SpeechSynthesisUtterance(`${word}`);
     utterThis.voice = speechSynthesis.getVoices()[1];
-    utterThis.volume = 3;
+    utterThis.volume = 5;
     utterThis.rate = 0.5;
     synth.speak(utterThis);
   });
-};
-document.getElementById('dragAndDrop').onclick = () => {
+});
+$('#dragAndDrop').click(() => {
   localStorage.setItem('task', 'dragAndDrop');
   let taskNote;
   let taskName;
@@ -102,20 +115,16 @@ document.getElementById('dragAndDrop').onclick = () => {
     let index = FightInterface.getRandomInt(0, res.colors.length);
     let word = res.colors[index];
     const colorLetters = _.shuffle(word.split(''));
-    document.querySelector('.form-group').innerHTML = template({ letters: colorLetters });
-    document.querySelector('.form-group').innerHTML += '<input type="hidden" id = "hidden-result">';
-    let children = document.getElementById('sortable').children;
-    for (let i = 0; i < children.length; i += 1) {
-      children[i].style.backgroundColor = word;
-      children[i].style.color = 'white';
-    }
+    $('.form-group').html(`${template({ letters: colorLetters })}<input type="hidden" id = "hidden-result">`);
+    $('#sortable').children().css('background-color', word);
+    $('#sortable').children().css('color', 'white');
     setInfo(`${taskName}`, `${word}`, `${taskNote}`);
     $('#sortable').sortable({
       revert: true,
     });
   });
-};
-document.getElementById('NOD').onclick = () => {
+});
+$('#NOD').click(() => {
   localStorage.setItem('task', 'NOD');
   let taskNote;
   let taskName;
@@ -124,8 +133,8 @@ document.getElementById('NOD').onclick = () => {
   let second;
   [taskNote, taskName, result, first, second] = getGreatestCommonFactor();
   setInfo(`${taskName}${first} & ${second}`, `${result}`, `${taskNote}`);
-};
-document.getElementById('NOK').onclick = () => {
+});
+$('#NOK').click(() => {
   localStorage.setItem('task', 'NOK');
   let taskNote;
   let taskName;
@@ -134,16 +143,24 @@ document.getElementById('NOK').onclick = () => {
   let second;
   [taskNote, taskName, result, first, second] = getLeastCommonMultiple();
   setInfo(`${taskName}${first} & ${second}`, `${result}`, `${taskNote}`);
-};
-document.getElementById('submit').onclick = () => {
+});
+$('#submitName').click(() => {
+  $('.heroName').html($('#nickNameInput').val());
+});
+$('#submit').click(() => {
   let solved = false;
+  let healed = false;
+  let fireSpritePath = blueFireSpritePath;
   switch (localStorage.getItem('task')) {
     case 'translate':
-      solved = document.getElementById('hidden-result').value.split(',')
-        .filter(a => a).includes(document.getElementById('answer').value.toLowerCase());
+      fireSpritePath = redFireSpritePath;
+      solved = $('#hidden-result').val().split(',')
+        .filter(a => a)
+        .includes($('#answer').val().toLowerCase());
       break;
     case 'listening':
-      solved = (document.getElementById('hidden-result').value === document.getElementById('answer').value);
+      fireSpritePath = blueFireSpritePath;
+      solved = ($('#hidden-result').val() === $('#answer').val());
       break;
     case 'dragAndDrop':
       let word = '';
@@ -151,21 +168,21 @@ document.getElementById('submit').onclick = () => {
       for (let i = 0; i < solution.length; i += 1) {
         word += solution[i].innerHTML;
       }
-      solved = (document.getElementById('hidden-result').value === word);
-      document.querySelector('.form-group').innerHTML = `<label for="answer">Input your answer</label>
-                                              <input type="text" class="form-control" id="answer">
-                                              <input type="hidden" id = "hidden-result">`;
+      fireSpritePath = pinkFireSpritePath;
+      solved = ($('#hidden-result').val() === word);
+      $('.form-group').html(`<label for="answer">Input your answer</label>
+                              <input type="text" class="form-control" id="answer">
+                              <input type="hidden" id = "hidden-result">`);
       break;
     default:
-      solved = (document.getElementById('hidden-result').value === document.getElementById('answer').value);
+      healed = ($('#hidden-result').val() === $('#answer').val());
       break;
   }
   if (solved) {
-    game.makeShot();
+    game.makeShot(fireSpritePath);
+  } else if (healed) {
+    game.healHero();
   } else {
     game.attackHero();
   }
-};
-window.addEventListener('keydown', (e) => {
-  if (e.code === 'Space') { game.healHero(); }
-}, false);
+});

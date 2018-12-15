@@ -1,8 +1,11 @@
+/* eslint-disable import/no-cycle */
+/* eslint-disable prefer-const */
 /* eslint-disable no-undef */
 /* eslint-disable no-alert */
 import Sprite from './sprite';
 import makeASound from './musicHandler';
 import moveHealth from './changeHealthBar';
+import generateName from '../../../components/nameGeneration/generateName';
 
 export default class FightInterface {
   constructor(canvas, ctx, resources) {
@@ -72,7 +75,7 @@ export default class FightInterface {
     return Math.floor(Math.random() * (max - min)) + min;
   }
 
-  makeShot() {
+  makeShot(firePath) {
     const x = this.player.pos[0] + this.player.sprite.size[0] / 2;
     const y = this.player.pos[1];
 
@@ -81,7 +84,7 @@ export default class FightInterface {
       this.player.sprite = new Sprite('img/knight.png', [0, 0], [256, 256], 10, [0, 1, 2, 3, 4, 5]);
       this.bullets.push({
         pos: [x, y],
-        sprite: new Sprite('img/fire.png', [0, 0], [256, 256], 10, [0, 1, 2, 3, 4, 5]),
+        sprite: new Sprite(firePath, [0, 0], [256, 256], 10, [0, 1, 2, 3, 4, 5]),
       });
     }, 300);
     makeASound('../game/sounds/iceball.wav');
@@ -125,6 +128,7 @@ export default class FightInterface {
       if (this.bullets[i].pos[0] >= this.enemy[2].pos[0]) {
         this.orkHealth -= 25;
         moveHealth(this.orkClassElement, this.orkHealth);
+        makeASound('../game/sounds/orc.wav');
         this.bullets.splice(i, 1);
         i -= 1;
       }
@@ -166,6 +170,15 @@ export default class FightInterface {
   }
 
   reset() {
+    let first;
+    let second;
+    let third;
+    let names;
+    [first, second, third, names] = generateName();
+    names.then((resp) => {
+      $('.orkName').html(`${resp.first[first]} ${resp.second[second]} ${resp.third[third]}`);
+    });
+
     this.heroHealth = 100;
     this.orkHealth = 100;
 

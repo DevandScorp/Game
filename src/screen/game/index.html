@@ -11,11 +11,35 @@
   </head>
   <body>
     <div class="lives">
-      <div class="heroesWrapper"><div class="heroLife">100%</div></div>
+      <div class="heroesWrapper">
+        <div class="heroName">Your name</div>
+        <div class="heroLife">100%</div>
+      </div>
       <div class = "fightButtonClass"><button type = "button" id = "taskButton" class="taskButton" data-toggle="modal" data-target="#tasks">
         <img src = "../game/img/swords.png"></button>
       </div>
-      <div class="heroesWrapper"><div class="orkLife">100%</div></div>
+      <div class="heroesWrapper">
+          <div class="orkName"></div>
+        <div class="orkLife">100%</div>
+      </div>
+    </div>
+    <div class="modal fade" id="nickName" tabindex="-1" role="dialog" aria-hidden="true">
+        <div class="modal-dialog">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title">Write your name</h5>
+              <button type="button" class="close" data-dismiss="modal">
+                <span aria-hidden="true">&times;</span>
+              </button>
+            </div>
+            <div class="modal-body">
+                  <label for="name">Nickname</label>
+                  <input type="nickName" class="form-control" id="nickNameInput">
+                  <br>
+                  <button type="submit" id = "submitName" class="btn btn-primary"  data-dismiss="modal">Submit</button>
+            </div>
+          </div>
+        </div>
     </div>
     <div class="modal fade" id="tasks" tabindex="-1" role="dialog" aria-hidden="true">
       <div class="modal-dialog">
@@ -29,17 +53,18 @@
           <div class="modal-body">
             <div class="btn-toolbar" role="toolbar">
                 <div class="btn-group" role="group">
-                  <button type="button" class="btn btn-success" id = "arithmetics" data-toggle="modal" data-dismiss="modal" data-target="#taskModel">Arithmetic</button>
-                  <button type="button" class="btn btn-success" id = "translate" data-toggle="modal" data-dismiss="modal" data-target="#taskModel">Translate</button>
-                  <button type="button" class="btn btn-success" id = "listening" data-toggle="modal" data-dismiss="modal" data-target="#taskModel">Listening</button>
+                    <button type="button" class="btn btn-danger" id = "dragAndDrop" data-toggle="modal" data-dismiss="modal" data-target="#taskModel">Drag&Drop</button>
+                    <button type="button" class="btn btn-danger" id = "translate" data-toggle="modal" data-dismiss="modal" data-target="#taskModel">Translate</button>
+                    <button type="button" class="btn btn-danger" id = "listening" data-toggle="modal" data-dismiss="modal" data-target="#taskModel">Listening</button>
+                  
                 </div>
             </div>
             <br>
             <div class="btn-toolbar" role="toolbar">
                 <div class="btn-group" role="group">
-                    <button type="button" class="btn btn-danger" id = "dragAndDrop" data-toggle="modal" data-dismiss="modal" data-target="#taskModel">Drag&Drop</button>
-                    <button type="button" class="btn btn-danger" id = "NOD" data-toggle="modal" data-dismiss="modal" data-target="#taskModel">НОД</button>
-                    <button type="button" class="btn btn-danger" id = "NOK" data-toggle="modal" data-dismiss="modal" data-target="#taskModel">НОК</button>
+                  <button type="button" class="btn btn-success" id = "arithmetics" data-toggle="modal" data-dismiss="modal" data-target="#taskModel">Arithmetic</button>
+                  <button type="button" class="btn btn-success" id = "NOD" data-toggle="modal" data-dismiss="modal" data-target="#taskModel">НОД</button>
+                  <button type="button" class="btn btn-success" id = "NOK" data-toggle="modal" data-dismiss="modal" data-target="#taskModel">НОК</button>
                 </div>
               </div>
           </div>
@@ -66,10 +91,7 @@
           </div>
         </div>
       </div>
-    </div> 
-    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>
-    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js" integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy" crossorigin="anonymous"></script>
+    </div>
     <script src = "../../../dist/battle.js"></script>
   </body>
 </html>
