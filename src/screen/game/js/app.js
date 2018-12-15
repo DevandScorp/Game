@@ -10,6 +10,8 @@ import listen from '../../../components/listening/listening';
 import dragAndDrop from '../../../components/dragAndDrop/dragAndDrop';
 import getGreatestCommonFactor from '../../../components/greatestCommonFactor/greatestCommonFactor';
 import getLeastCommonMultiple from '../../../components/leastCommonMultiple/leastCommonMultiple';
+import setInfo from './setInfo';
+
 require('webpack-jquery-ui');
 const _ = require('lodash');
 
@@ -56,9 +58,7 @@ document.getElementById('arithmetics').onclick = () => {
   let sign;
   let taskNote;
   [name, first, second, sign, result, taskNote] = getTask();
-  document.getElementById('taskModelLabel').innerHTML = `${name}${first}${sign}${second}`;
-  document.getElementById('hidden-result').value = `${result}`;
-  document.getElementById('note').innerHTML = `${taskNote}`;
+  setInfo(`${name}${first}${sign}${second}`, `${result}`, `${taskNote}`);
 };
 document.getElementById('translate').onclick = () => {
   localStorage.setItem('task', 'translate');
@@ -69,11 +69,9 @@ document.getElementById('translate').onclick = () => {
   dictionary.then((res) => {
     let i = FightInterface.getRandomInt(0, res.dictionary.words.length);
     let word = res.dictionary.words[i];
-    document.getElementById('taskModelLabel').innerHTML = `${taskName}${word.english}`;
     let second = word.second ? word.second : '';
-    document.getElementById('hidden-result').value = `${word.first},${second}`;
+    setInfo(`${taskName}${word.english}`, `${word.first},${second}`, `${taskNote}`);
   });
-  document.getElementById('note').innerHTML = `${taskNote}`;
 };
 document.getElementById('listening').onclick = () => {
   localStorage.setItem('task', 'listening');
@@ -85,15 +83,13 @@ document.getElementById('listening').onclick = () => {
   dictionary.then((res) => {
     let i = FightInterface.getRandomInt(0, res.dictionary.words.length);
     let word = res.dictionary.words[i];
-    document.getElementById('taskModelLabel').innerHTML = `${taskName}`;
-    document.getElementById('hidden-result').value = `${word}`;
+    setInfo(`${taskName}`, `${word}`, `${taskNote}`);
     const utterThis = new SpeechSynthesisUtterance(`${word}`);
     utterThis.voice = speechSynthesis.getVoices()[1];
     utterThis.volume = 3;
     utterThis.rate = 0.5;
     synth.speak(utterThis);
   });
-  document.getElementById('note').innerHTML = `${taskNote}`;
 };
 document.getElementById('dragAndDrop').onclick = () => {
   localStorage.setItem('task', 'dragAndDrop');
@@ -105,7 +101,6 @@ document.getElementById('dragAndDrop').onclick = () => {
   colors.then((res) => {
     let index = FightInterface.getRandomInt(0, res.colors.length);
     let word = res.colors[index];
-    document.getElementById('taskModelLabel').innerHTML = `${taskName}`;
     const colorLetters = _.shuffle(word.split(''));
     document.querySelector('.form-group').innerHTML = template({ letters: colorLetters });
     document.querySelector('.form-group').innerHTML += '<input type="hidden" id = "hidden-result">';
@@ -114,12 +109,11 @@ document.getElementById('dragAndDrop').onclick = () => {
       children[i].style.backgroundColor = word;
       children[i].style.color = 'white';
     }
-    document.getElementById('hidden-result').value = `${word}`;
+    setInfo(`${taskName}`, `${word}`, `${taskNote}`);
     $('#sortable').sortable({
       revert: true,
     });
   });
-  document.getElementById('note').innerHTML = `${taskNote}`;
 };
 document.getElementById('NOD').onclick = () => {
   localStorage.setItem('task', 'NOD');
@@ -129,9 +123,7 @@ document.getElementById('NOD').onclick = () => {
   let first;
   let second;
   [taskNote, taskName, result, first, second] = getGreatestCommonFactor();
-  document.getElementById('taskModelLabel').innerHTML = `${taskName}${first} & ${second}`;
-  document.getElementById('hidden-result').value = `${result}`;
-  document.getElementById('note').innerHTML = `${taskNote}`;
+  setInfo(`${taskName}${first} & ${second}`, `${result}`, `${taskNote}`);
 };
 document.getElementById('NOK').onclick = () => {
   localStorage.setItem('task', 'NOK');
@@ -141,16 +133,11 @@ document.getElementById('NOK').onclick = () => {
   let first;
   let second;
   [taskNote, taskName, result, first, second] = getLeastCommonMultiple();
-  document.getElementById('taskModelLabel').innerHTML = `${taskName}${first} & ${second}`;
-  document.getElementById('hidden-result').value = `${result}`;
-  document.getElementById('note').innerHTML = `${taskNote}`;
+  setInfo(`${taskName}${first} & ${second}`, `${result}`, `${taskNote}`);
 };
 document.getElementById('submit').onclick = () => {
   let solved = false;
   switch (localStorage.getItem('task')) {
-    case 'arithmetics':
-      solved = (document.getElementById('hidden-result').value === document.getElementById('answer').value);
-      break;
     case 'translate':
       solved = document.getElementById('hidden-result').value.split(',')
         .filter(a => a).includes(document.getElementById('answer').value.toLowerCase());
@@ -169,13 +156,8 @@ document.getElementById('submit').onclick = () => {
                                               <input type="text" class="form-control" id="answer">
                                               <input type="hidden" id = "hidden-result">`;
       break;
-    case 'NOD':
-      solved = (document.getElementById('hidden-result').value === document.getElementById('answer').value);
-      break;
-    case 'NOK':
-      solved = (document.getElementById('hidden-result').value === document.getElementById('answer').value);
-      break;
     default:
+      solved = (document.getElementById('hidden-result').value === document.getElementById('answer').value);
       break;
   }
   if (solved) {

@@ -10,7 +10,7 @@ export function getNOD(a, b) {
   }
   return a;
 }
-export default function getGCF() {
+export default function getGreatestCommonFactor() {
   const a = Sprite.getRandomInt(1, 20);
   const b = Sprite.getRandomInt(1, 20);
   const taskName = 'Count the greatest common factor: ';
