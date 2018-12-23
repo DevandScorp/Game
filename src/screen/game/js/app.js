@@ -13,12 +13,18 @@ import dragAndDrop from '../../../components/dragAndDrop/dragAndDrop';
 import getGreatestCommonFactor from '../../../components/greatestCommonFactor/greatestCommonFactor';
 import getLeastCommonMultiple from '../../../components/leastCommonMultiple/leastCommonMultiple';
 import setInfo from './setInfo';
+import getRandomInt from './getRandomInt';
+import compareTwoNumbers from '../../../components/comparison/compareTwoNumbers';
+import getTranscription from '../../../components/transcription/getTranscription';
+import createWords from '../../../components/createWords/createWords';
+import findRedundant from '../../../components/findRedundant/findRedundant';
+import findMistake from '../../../components/findMistake/findMistake';
 
 require('webpack-jquery-ui');
 const _ = require('lodash');
 
 const canvas = document.createElement('canvas');
-canvas.width = window.innerWidth * 0.75;
+canvas.width = window.innerWidth;
 canvas.height = window.innerHeight * 0.75;
 document.body.appendChild(canvas);
 
@@ -30,7 +36,6 @@ const pinkFireSpritePath = 'img/firePink.png';
 
 /** Ввод имени при загрузке страницы */
 $(document).ready(() => {
-  console.log('ready');
   $('#nickName').modal('show');
 });
 
@@ -73,6 +78,41 @@ $('#arithmetics').click(() => {
   [name, first, second, sign, result, taskNote] = getTask();
   setInfo(`${name}${first}${sign}${second}`, `${result}`, `${taskNote}`);
 });
+$('#mistake').click(() => {
+  localStorage.setItem('task', 'mistake');
+  let taskNote;
+  let taskName;
+  let sentences;
+  let template;
+  [taskNote, taskName, sentences, template] = findMistake();
+  sentences.then((res) => {
+    let index = getRandomInt(0, res.length);
+    let word = res[index];
+    $('.form-group').html(`${template({ sentence: word })}<input type="hidden" id = "hidden-result">`);
+    setInfo(`${taskName}`, `${word.answer}`, `${taskNote}`);
+  });
+  $('.form-group').click((evt) => {
+    for (let i = 0; i < document.querySelector('.form-group').children.length; i += 1) {
+      document.querySelector('.form-group').children[i].classList.remove('clicked');
+    }
+    evt.target.classList.add('clicked');
+  });
+});
+
+$('#redundant').click(() => {
+  localStorage.setItem('task', 'redundant');
+  let taskNote;
+  let taskName;
+  let variants;
+  let template;
+  [taskNote, taskName, variants, template] = findRedundant();
+  variants.then((res) => {
+    let index = getRandomInt(0, res.length);
+    let word = res[index];
+    $('.form-group').html(`${template({ words: word })}<input type="hidden" id = "hidden-result">`);
+    setInfo(`${taskName}  ${word.topic} `, `${word.answer}`, `${taskNote}`);
+  });
+});
 $('#translate').click(() => {
   localStorage.setItem('task', 'translate');
   let taskNote;
@@ -80,10 +120,38 @@ $('#translate').click(() => {
   let dictionary;
   [taskNote, taskName, dictionary] = getDictionary();
   dictionary.then((res) => {
-    let i = FightInterface.getRandomInt(0, res.dictionary.words.length);
+    let i = getRandomInt(0, res.dictionary.words.length);
     let word = res.dictionary.words[i];
     let second = word.second ? word.second : '';
     setInfo(`${taskName}${word.english}`, `${word.first},${second}`, `${taskNote}`);
+  });
+});
+$('#transcription').click(() => {
+  localStorage.setItem('task', 'transcription');
+  let taskNote;
+  let taskName;
+  let transcriptions;
+  [taskNote, taskName, transcriptions] = getTranscription();
+  transcriptions.then((res) => {
+    let i = getRandomInt(0, res.length);
+    const word = res[i].word;
+    const transcription = res[i].transcription;
+    setInfo(`${taskName} : ${transcription}`, `${word}`, `${taskNote}`);
+  });
+});
+
+$('#createWords').click(() => {
+  localStorage.setItem('task', 'transcription');
+  let taskNote;
+  let taskName;
+  let words;
+  [taskNote, taskName, words] = createWords();
+  words.then((res) => {
+    let i = getRandomInt(0, res.length);
+    const sentence = res[i].sentence;
+    const word = res[i].word;
+    const answer = res[i].answer;
+    setInfo(`${taskName} : ${word} <br> Sentence : <br> ${sentence}`, `${answer}`, `${taskNote}`);
   });
 });
 $('#listening').click(() => {
@@ -94,7 +162,7 @@ $('#listening').click(() => {
   let synth;
   [taskNote, taskName, dictionary, synth] = listen();
   dictionary.then((res) => {
-    let i = FightInterface.getRandomInt(0, res.dictionary.words.length);
+    let i = getRandomInt(0, res.dictionary.words.length);
     let word = res.dictionary.words[i];
     setInfo(`${taskName}`, `${word}`, `${taskNote}`);
     const utterThis = new SpeechSynthesisUtterance(`${word}`);
@@ -112,7 +180,7 @@ $('#dragAndDrop').click(() => {
   let template;
   [taskNote, taskName, colors, template] = dragAndDrop();
   colors.then((res) => {
-    let index = FightInterface.getRandomInt(0, res.colors.length);
+    let index = getRandomInt(0, res.colors.length);
     let word = res.colors[index];
     const colorLetters = _.shuffle(word.split(''));
     $('.form-group').html(`${template({ letters: colorLetters })}<input type="hidden" id = "hidden-result">`);
@@ -144,6 +212,16 @@ $('#NOK').click(() => {
   [taskNote, taskName, result, first, second] = getLeastCommonMultiple();
   setInfo(`${taskName}${first} & ${second}`, `${result}`, `${taskNote}`);
 });
+$('#comparison').click(() => {
+  localStorage.setItem('task', 'comparison');
+  let taskNote;
+  let taskName;
+  let sign;
+  let a;
+  let b;
+  [taskNote, taskName, sign, a, b] = compareTwoNumbers();
+  setInfo(`${taskName}${a} & ${b}`, `${sign}`, `${taskNote}`);
+});
 $('#submitName').click(() => {
   $('.heroName').html($('#nickNameInput').val());
 });
@@ -157,6 +235,29 @@ $('#submit').click(() => {
       solved = $('#hidden-result').val().split(',')
         .filter(a => a)
         .includes($('#answer').val().toLowerCase());
+      break;
+    case 'redundant':
+      let index = 0;
+      let children = document.getElementById('getRedundant').children;
+      for (let i = 0; i < children.length; i += 1) {
+        if (children[i].selected)index = i;
+      }
+      solved = ($('#hidden-result').val() === `${index}`);
+      $('.form-group').html(`<label for="answer">Input your answer</label>
+          <input type="text" class="form-control" id="answer">
+          <input type="hidden" id = "hidden-result">`);
+      break;
+    case 'mistake':
+      index = 0;
+      children = document.querySelector('.form-group').children;
+      for (let i = 0; i < children.length; i += 1) {
+        if (children[i].classList.contains('clicked'))index = i;
+      }
+      solved = ($('#hidden-result').val() === `${index}`);
+      $('.form-group').html(`<label for="answer">Input your answer</label>
+          <input type="text" class="form-control" id="answer">
+          <input type="hidden" id = "hidden-result">`);
+      $('.form-group').unbind('click');
       break;
     case 'listening':
       fireSpritePath = blueFireSpritePath;
@@ -175,7 +276,7 @@ $('#submit').click(() => {
                               <input type="hidden" id = "hidden-result">`);
       break;
     default:
-      healed = ($('#hidden-result').val() === $('#answer').val());
+      healed = ($('#hidden-result').val() === $('#answer').val().toLowerCase());
       break;
   }
   if (solved) {

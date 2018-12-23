@@ -1,10 +1,10 @@
-import Sprite from '../../screen/game/js/fightInterface';
+import getRandomInt from '../../screen/game/js/getRandomInt';
 
 export default function getTask() {
   const signs = ['*', '-', '+', '/'];
-  const a = Sprite.getRandomInt(1, 10);
-  const b = Sprite.getRandomInt(1, 10);
-  const sign = signs[Sprite.getRandomInt(0, signs.length)];
+  const a = getRandomInt(1, 10);
+  const b = getRandomInt(1, 10);
+  const sign = signs[getRandomInt(0, signs.length)];
   const taskName = 'Solve task: ';
   const taskNote = 'Note: for division you have to write first number after comma';
   let result = 0;

@@ -6,6 +6,7 @@ import Sprite from './sprite';
 import makeASound from './musicHandler';
 import moveHealth from './changeHealthBar';
 import generateName from '../../../components/nameGeneration/generateName';
+import getRandomInt from './getRandomInt';
 
 export default class FightInterface {
   constructor(canvas, ctx, resources) {
@@ -32,8 +33,8 @@ export default class FightInterface {
     };
     this.orkHealth = 100;
     this.heroHealth = 100;
-    this.heroClassElement = document.querySelector('.heroLife');
-    this.orkClassElement = document.querySelector('.orkLife');
+    this.heroClassElement = $('.heroLife');
+    this.orkClassElement = $('.orkLife');
   }
 
   static getEnemySprites() {
@@ -41,38 +42,34 @@ export default class FightInterface {
     const orkBody = {
       pos: [0, 0],
       sprite:
-          new Sprite(orkSpriteLocation, [220 * FightInterface.getRandomInt(0, 3), 935], [220, 240]),
+          new Sprite(orkSpriteLocation, [220 * getRandomInt(0, 3), 935], [220, 240]),
     };
     const leftLeg = {
       pos: [0, 0],
       sprite:
-          new Sprite(orkSpriteLocation, [85 * FightInterface.getRandomInt(0, 3), 0], [85, 120]),
+          new Sprite(orkSpriteLocation, [85 * getRandomInt(0, 3), 0], [85, 120]),
     };
     const rightLeg = {
       pos: [0, 0],
       sprite:
-          new Sprite(orkSpriteLocation, [85 * FightInterface.getRandomInt(0, 3), 120], [85, 120]),
+          new Sprite(orkSpriteLocation, [85 * getRandomInt(0, 3), 120], [85, 120]),
     };
     const rightHand = {
       pos: [0, 0],
       sprite:
-          new Sprite(orkSpriteLocation, [219 * FightInterface.getRandomInt(0, 3), 240], [219, 282]),
+          new Sprite(orkSpriteLocation, [219 * getRandomInt(0, 3), 240], [219, 282]),
     };
     const leftHand = {
       pos: [0, 0],
       sprite:
-          new Sprite(orkSpriteLocation, [165 * FightInterface.getRandomInt(0, 3), 720], [165, 210]),
+          new Sprite(orkSpriteLocation, [165 * getRandomInt(0, 3), 720], [165, 210]),
     };
     const head = {
       pos: [0, 0],
       sprite:
-          new Sprite(orkSpriteLocation, [220 * FightInterface.getRandomInt(0, 3), 525], [220, 195]),
+          new Sprite(orkSpriteLocation, [220 * getRandomInt(0, 3), 525], [220, 195]),
     };
     return [rightLeg, leftLeg, rightHand, orkBody, head, leftHand];
-  }
-
-  static getRandomInt(min, max) {
-    return Math.floor(Math.random() * (max - min)) + min;
   }
 
   makeShot(firePath) {
@@ -196,10 +193,8 @@ export default class FightInterface {
     const canvasWidth = this.canvas.width;
     const canvasHeight = this.canvas.height;
 
-    this.orkClassElement.style.width = '100%';
-    this.orkClassElement.innerHTML = '100%';
-    this.heroClassElement.style.width = '100%';
-    this.heroClassElement.innerHTML = '100%';
+    moveHealth(this.orkClassElement, 100);
+    moveHealth(this.heroClassElement, 100);
 
     this.enemy[3].pos = [canvasWidth - bodySizeX - 200, canvasHeight / 2 - bodySizeY / 2];
     this.enemy[1].pos = [canvasWidth - bodySizeX - 180, canvasHeight / 2 - bodySizeY / 2 + 180];

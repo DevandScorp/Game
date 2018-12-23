@@ -9,6 +9,16 @@ body {
     -o-background-size: 100%; /* Opera 9.6+ */
     background-size: 100%;
 }
+.btn-group {
+    width:50%;
+    
+}
+#attack, #heal {
+    width:100%;
+}
+.clicked {
+    background-color: #db363c;
+}
 canvas {
     display: block;
     margin: auto;
