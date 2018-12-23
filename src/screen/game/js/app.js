@@ -19,7 +19,9 @@ import getTranscription from '../../../components/transcription/getTranscription
 import createWords from '../../../components/createWords/createWords';
 import findRedundant from '../../../components/findRedundant/findRedundant';
 import findMistake from '../../../components/findMistake/findMistake';
-
+import getPrepositions from '../../../components/prepositions/getPrepositions';
+import getTenses from '../../../components/tenses/getTenses';
+import getArticles from '../../../components/articles/getArticles';
 require('webpack-jquery-ui');
 const _ = require('lodash');
 
@@ -111,6 +113,50 @@ $('#redundant').click(() => {
     let word = res[index];
     $('.form-group').html(`${template({ words: word })}<input type="hidden" id = "hidden-result">`);
     setInfo(`${taskName}  ${word.topic} `, `${word.answer}`, `${taskNote}`);
+  });
+});
+
+$('#prepositions').click(() => {
+  localStorage.setItem('task', 'prepositions');
+  let taskNote;
+  let taskName;
+  let prepositions;
+  let template;
+  [taskNote, taskName, prepositions, template] = getPrepositions();
+  prepositions.then((res) => {
+    let index = getRandomInt(0, res.length);
+    let word = res[index];
+    $('.form-group').html(`${template({ words: word })}<input type="hidden" id = "hidden-result">`);
+    setInfo(`${taskName}  ${word.sentence} `, `${word.answer}`, `${taskNote}`);
+  });
+});
+
+$('#articles').click(() => {
+  localStorage.setItem('task', 'articles');
+  let taskNote;
+  let taskName;
+  let articles;
+  let template;
+  [taskNote, taskName, articles, template] = getArticles();
+  articles.then((res) => {
+    let index = getRandomInt(0, res.length);
+    let word = res[index];
+    $('.form-group').html(`${template({ words: word })}<input type="hidden" id = "hidden-result">`);
+    setInfo(`${taskName}  ${word.sentence} `, `${word.answer}`, `${taskNote}`);
+  });
+});
+$('#tenses').click(() => {
+  localStorage.setItem('task', 'tenses');
+  let taskNote;
+  let taskName;
+  let tenses;
+  let template;
+  [taskNote, taskName, tenses, template] = getTenses();
+  tenses.then((res) => {
+    let index = getRandomInt(0, res.length);
+    let word = res[index];
+    $('.form-group').html(`${template({ words: word })}<input type="hidden" id = "hidden-result">`);
+    setInfo(`${taskName}  ${word.sentence} `, `${word.answer}`, `${taskNote}`);
   });
 });
 $('#translate').click(() => {
@@ -239,6 +285,39 @@ $('#submit').click(() => {
     case 'redundant':
       let index = 0;
       let children = document.getElementById('getRedundant').children;
+      for (let i = 0; i < children.length; i += 1) {
+        if (children[i].selected)index = i;
+      }
+      solved = ($('#hidden-result').val() === `${index}`);
+      $('.form-group').html(`<label for="answer">Input your answer</label>
+          <input type="text" class="form-control" id="answer">
+          <input type="hidden" id = "hidden-result">`);
+      break;
+    case 'prepositions':
+      index = 0;
+      children = document.getElementById('getPrepositions').children;
+      for (let i = 0; i < children.length; i += 1) {
+        if (children[i].selected)index = i;
+      }
+      solved = ($('#hidden-result').val() === `${index}`);
+      $('.form-group').html(`<label for="answer">Input your answer</label>
+          <input type="text" class="form-control" id="answer">
+          <input type="hidden" id = "hidden-result">`);
+      break;
+    case 'articles':
+      index = 0;
+      children = document.getElementById('getArticles').children;
+      for (let i = 0; i < children.length; i += 1) {
+        if (children[i].selected)index = i;
+      }
+      healed = ($('#hidden-result').val() === `${index}`);
+      $('.form-group').html(`<label for="answer">Input your answer</label>
+          <input type="text" class="form-control" id="answer">
+          <input type="hidden" id = "hidden-result">`);
+      break;
+    case 'tenses':
+      index = 0;
+      children = document.getElementById('getTenses').children;
       for (let i = 0; i < children.length; i += 1) {
         if (children[i].selected)index = i;
       }

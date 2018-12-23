@@ -4,13 +4,12 @@ const webpack = require('webpack');
 module.exports = {
   entry: {
     battle: './src/screen/game/js/app.js',
-    // search: './src/search.js'
   },
   output: {
     filename: '[name].js',
     path: path.resolve(`${__dirname}`, 'dist'),
   },
-  mode: 'development',
+  mode: 'production',
   devtool: 'inline-source-map',
   module: {
     rules: [

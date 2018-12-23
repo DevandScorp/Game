@@ -1,0 +1,23 @@
+[
+    {"sentence":"The company ... a great number of hotels and restaurants",
+     "verbs":[   "owns",
+                 "is owning"],
+     "answer": "0"},
+    {"sentence":"You ... too noisy!Can you keep it down?",
+     "verbs":[   "are",
+                 "are being"],
+     "answer": "0"},
+    {"sentence":"Is it Mr.James? He ... so different in a suit;",
+     "verbs":[   "looks",
+                 "is looking"],
+     "answer": "0"},
+     {"sentence":"Have you seen my organizer? I ... for it all morning",
+     "verbs":[   "am searching",
+                 "have been searching"],
+      "answer": "1"},
+    {"sentence":"It ... harder and harder nowadays to enter a university",
+     "verbs":[   "gets",
+                 "is getting",
+                 "has got"],
+     "answer": "1"}
+]
