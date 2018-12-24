@@ -22,6 +22,7 @@ import findMistake from '../../../components/findMistake/findMistake';
 import getPrepositions from '../../../components/prepositions/getPrepositions';
 import getTenses from '../../../components/tenses/getTenses';
 import getArticles from '../../../components/articles/getArticles';
+
 require('webpack-jquery-ui');
 const _ = require('lodash');
 
@@ -39,6 +40,11 @@ const pinkFireSpritePath = 'img/firePink.png';
 /** Ввод имени при загрузке страницы */
 $(document).ready(() => {
   $('#nickName').modal('show');
+  let players = {};
+  if (sessionStorage.getItem('players') && Object.keys(JSON.parse(sessionStorage.getItem('players')))) {
+    players = JSON.parse(sessionStorage.getItem('players'));
+  }
+  sessionStorage.setItem('players', JSON.stringify(players));
 });
 
 let lastTime = 0;
@@ -70,7 +76,7 @@ resourceHandler.load([
 resourceHandler.onReady(init);
 /** Tasks handlers */
 $('#arithmetics').click(() => {
-  localStorage.setItem('task', 'arithmetics');
+  sessionStorage.setItem('task', 'arithmetics');
   let name;
   let first;
   let second;
@@ -81,7 +87,7 @@ $('#arithmetics').click(() => {
   setInfo(`${name}${first}${sign}${second}`, `${result}`, `${taskNote}`);
 });
 $('#mistake').click(() => {
-  localStorage.setItem('task', 'mistake');
+  sessionStorage.setItem('task', 'mistake');
   let taskNote;
   let taskName;
   let sentences;
@@ -102,7 +108,7 @@ $('#mistake').click(() => {
 });
 
 $('#redundant').click(() => {
-  localStorage.setItem('task', 'redundant');
+  sessionStorage.setItem('task', 'redundant');
   let taskNote;
   let taskName;
   let variants;
@@ -117,7 +123,7 @@ $('#redundant').click(() => {
 });
 
 $('#prepositions').click(() => {
-  localStorage.setItem('task', 'prepositions');
+  sessionStorage.setItem('task', 'prepositions');
   let taskNote;
   let taskName;
   let prepositions;
@@ -132,7 +138,7 @@ $('#prepositions').click(() => {
 });
 
 $('#articles').click(() => {
-  localStorage.setItem('task', 'articles');
+  sessionStorage.setItem('task', 'articles');
   let taskNote;
   let taskName;
   let articles;
@@ -146,7 +152,7 @@ $('#articles').click(() => {
   });
 });
 $('#tenses').click(() => {
-  localStorage.setItem('task', 'tenses');
+  sessionStorage.setItem('task', 'tenses');
   let taskNote;
   let taskName;
   let tenses;
@@ -160,7 +166,7 @@ $('#tenses').click(() => {
   });
 });
 $('#translate').click(() => {
-  localStorage.setItem('task', 'translate');
+  sessionStorage.setItem('task', 'translate');
   let taskNote;
   let taskName;
   let dictionary;
@@ -173,7 +179,7 @@ $('#translate').click(() => {
   });
 });
 $('#transcription').click(() => {
-  localStorage.setItem('task', 'transcription');
+  sessionStorage.setItem('task', 'transcription');
   let taskNote;
   let taskName;
   let transcriptions;
@@ -187,7 +193,7 @@ $('#transcription').click(() => {
 });
 
 $('#createWords').click(() => {
-  localStorage.setItem('task', 'transcription');
+  sessionStorage.setItem('task', 'transcription');
   let taskNote;
   let taskName;
   let words;
@@ -201,7 +207,7 @@ $('#createWords').click(() => {
   });
 });
 $('#listening').click(() => {
-  localStorage.setItem('task', 'listening');
+  sessionStorage.setItem('task', 'listening');
   let taskNote;
   let taskName;
   let dictionary;
@@ -219,7 +225,7 @@ $('#listening').click(() => {
   });
 });
 $('#dragAndDrop').click(() => {
-  localStorage.setItem('task', 'dragAndDrop');
+  sessionStorage.setItem('task', 'dragAndDrop');
   let taskNote;
   let taskName;
   let colors;
@@ -239,7 +245,7 @@ $('#dragAndDrop').click(() => {
   });
 });
 $('#NOD').click(() => {
-  localStorage.setItem('task', 'NOD');
+  sessionStorage.setItem('task', 'NOD');
   let taskNote;
   let taskName;
   let result;
@@ -249,7 +255,7 @@ $('#NOD').click(() => {
   setInfo(`${taskName}${first} & ${second}`, `${result}`, `${taskNote}`);
 });
 $('#NOK').click(() => {
-  localStorage.setItem('task', 'NOK');
+  sessionStorage.setItem('task', 'NOK');
   let taskNote;
   let taskName;
   let result;
@@ -259,7 +265,7 @@ $('#NOK').click(() => {
   setInfo(`${taskName}${first} & ${second}`, `${result}`, `${taskNote}`);
 });
 $('#comparison').click(() => {
-  localStorage.setItem('task', 'comparison');
+  sessionStorage.setItem('task', 'comparison');
   let taskNote;
   let taskName;
   let sign;
@@ -270,12 +276,16 @@ $('#comparison').click(() => {
 });
 $('#submitName').click(() => {
   $('.heroName').html($('#nickNameInput').val());
+  const players = JSON.parse(sessionStorage.getItem('players'));
+  game.currentPlayerName = $('#nickNameInput').val();
+  players[$('#nickNameInput').val()] = 0;
+  sessionStorage.setItem('players', JSON.stringify(players));
 });
 $('#submit').click(() => {
   let solved = false;
   let healed = false;
   let fireSpritePath = blueFireSpritePath;
-  switch (localStorage.getItem('task')) {
+  switch (sessionStorage.getItem('task')) {
     case 'translate':
       fireSpritePath = redFireSpritePath;
       solved = $('#hidden-result').val().split(',')
@@ -340,7 +350,7 @@ $('#submit').click(() => {
       break;
     case 'listening':
       fireSpritePath = blueFireSpritePath;
-      solved = ($('#hidden-result').val() === $('#answer').val());
+      solved = ($('#hidden-result').val() === $('#answer').val().toLowerCase());
       break;
     case 'dragAndDrop':
       let word = '';

@@ -7,6 +7,7 @@ import makeASound from './musicHandler';
 import moveHealth from './changeHealthBar';
 import generateName from '../../../components/nameGeneration/generateName';
 import getRandomInt from './getRandomInt';
+import getScoreTable from './scoreTable';
 
 export default class FightInterface {
   constructor(canvas, ctx, resources) {
@@ -18,7 +19,7 @@ export default class FightInterface {
     this.enemy = FightInterface.getEnemySprites();
     this.isDamaged = false;
     this.isHealed = false;
-
+    this.currentPlayerName = '';
     this.player = {
       sprite: new Sprite('img/knight.png', [0, 0], [256, 256], 10, [0, 1, 2, 3, 4, 5, 6]),
     };
@@ -124,18 +125,21 @@ export default class FightInterface {
       this.bullets[i].sprite.update(dt);
       if (this.bullets[i].pos[0] >= this.enemy[2].pos[0]) {
         this.orkHealth -= 25;
-        moveHealth(this.orkClassElement, this.orkHealth);
         makeASound('../game/sounds/orc.wav');
+        moveHealth(this.orkClassElement, this.orkHealth);
         this.bullets.splice(i, 1);
         i -= 1;
       }
     }
     if (!this.heroHealth) {
-      alert('Lose');
+      $('#scoreTable div.modal-body').html(getScoreTable());
+      $('#scoreTable').modal('show');
       this.reset();
     }
     if (!this.orkHealth) {
-      alert('Win');
+      const players = JSON.parse(sessionStorage.getItem('players'));
+      players[this.currentPlayerName] += 100;
+      sessionStorage.setItem('players', JSON.stringify(players));
       this.reset();
     }
   }
