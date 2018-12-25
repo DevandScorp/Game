@@ -2,7 +2,7 @@ const _ = require('lodash');
 
 export default function getTenses() {
   const taskName = 'Put the correct preposition: ';
-  const taskNote = 'Note: выбрать нужный предлог/слово';
+  const taskNote = 'Note: выбрать нужную форму глагола';
   const tenses = fetch('./../../../src/components/tenses/tenseTests.json')
     .then(res => res.json());
 

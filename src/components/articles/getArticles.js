@@ -1,7 +1,7 @@
 const _ = require('lodash');
 
 export default function getArticles() {
-  const taskName = 'Put the correct preposition: ';
+  const taskName = 'Put the correct article: ';
   const taskNote = 'Note: выбрать нужный предлог/слово';
   const articles = fetch('./../../../src/components/articles/articles.json')
     .then(res => res.json());
