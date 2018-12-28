@@ -1,0 +1,22 @@
+[
+    {"sentence":"It costs ... thousand euros",
+     "articles":[   "a",
+                    "-"],
+     "answer": "0"},
+    {"sentence":"The plain was ... hour late",
+     "articles":[   "a",
+                    "an"],
+     "answer": "1"},
+    {"sentence":"I've run out of ... money;",
+     "articles":[   "-",
+                    "the"],
+     "answer": "0"},
+     {"sentence":"There are six points on ... agenda",
+      "articles":[   "-",
+                     "the"],
+      "answer": "1"},
+    {"sentence":"Do yu know how to become ... FBI agent?",
+     "articles":[   "a",
+                    "an"],
+     "answer": "1"}
+]

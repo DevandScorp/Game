@@ -5,7 +5,7 @@
 import Sprite from './sprite';
 import makeASound from './musicHandler';
 import moveHealth from './changeHealthBar';
-import generateName from '../../../components/nameGeneration/generateName';
+import generateName from '../../../components/tasks/nameGeneration/generateName';
 import getRandomInt from './getRandomInt';
 import getScoreTable from './scoreTable';
 

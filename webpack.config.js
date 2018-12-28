@@ -4,6 +4,7 @@ const webpack = require('webpack');
 module.exports = {
   entry: {
     battle: './src/screen/game/js/app.js',
+    landing: './src/screen/landing-page/js/app.js',
   },
   output: {
     filename: '[name].js',
