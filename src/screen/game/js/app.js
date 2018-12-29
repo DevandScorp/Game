@@ -44,6 +44,7 @@ $(document).ready(() => {
   if (sessionStorage.getItem('players') && Object.keys(JSON.parse(sessionStorage.getItem('players')))) {
     players = JSON.parse(sessionStorage.getItem('players'));
   }
+  setTimeout(() => { $('#nickNameInput').focus(); }, 500);
   sessionStorage.setItem('players', JSON.stringify(players));
 });
 
@@ -75,6 +76,33 @@ resourceHandler.load([
 ]);
 resourceHandler.onReady(init);
 /** Tasks handlers */
+$('body').keydown((e) => {
+  if (e.altKey) {
+    e.preventDefault();
+    if (!document.querySelector('.show')) {
+      $('#tasks').modal('show');
+    }
+  }
+
+  if (e.key === 'Enter') {
+    if (!document.querySelector('div.show div.modal-body div.btn-toolbar')) {
+      $('div.show button').trigger('click');
+    }
+  }
+  if (e.key === '1') {
+    if (document.querySelector('div.show div.modal-body div.btn-toolbar')) {
+      $('#attack').trigger('click');
+      $('#dragAndDrop').focus();
+    }
+  }
+  if (e.key === '2') {
+    if (document.querySelector('div.show div.modal-body div.btn-toolbar')) {
+      e.preventDefault();
+      $('#heal').trigger('click');
+      $('#arithmetics').focus();
+    }
+  }
+});
 $('#arithmetics').click(() => {
   sessionStorage.setItem('task', 'arithmetics');
   let name;
@@ -85,6 +113,7 @@ $('#arithmetics').click(() => {
   let taskNote;
   [name, first, second, sign, result, taskNote] = getTask();
   setInfo(`${name}${first}${sign}${second}`, `${result}`, `${taskNote}`);
+  setTimeout(() => { $('#answer').focus(); }, 500);
 });
 $('#mistake').click(() => {
   sessionStorage.setItem('task', 'mistake');
@@ -119,6 +148,7 @@ $('#redundant').click(() => {
     let word = res[index];
     $('.form-group').html(`${template({ words: word })}<input type="hidden" id = "hidden-result">`);
     setInfo(`${taskName}  ${word.topic} `, `${word.answer}`, `${taskNote}`);
+    setTimeout(() => { $('#getRedundant').focus(); }, 500);
   });
 });
 
@@ -134,6 +164,7 @@ $('#prepositions').click(() => {
     let word = res[index];
     $('.form-group').html(`${template({ words: word })}<input type="hidden" id = "hidden-result">`);
     setInfo(`${taskName}  ${word.sentence} `, `${word.answer}`, `${taskNote}`);
+    setTimeout(() => { $('#getPrepositions').focus(); }, 500);
   });
 });
 
@@ -149,6 +180,7 @@ $('#articles').click(() => {
     let word = res[index];
     $('.form-group').html(`${template({ words: word })}<input type="hidden" id = "hidden-result">`);
     setInfo(`${taskName}  ${word.sentence} `, `${word.answer}`, `${taskNote}`);
+    setTimeout(() => { $('#getArticles').focus(); }, 500);
   });
 });
 $('#tenses').click(() => {
@@ -163,6 +195,7 @@ $('#tenses').click(() => {
     let word = res[index];
     $('.form-group').html(`${template({ words: word })}<input type="hidden" id = "hidden-result">`);
     setInfo(`${taskName}  ${word.sentence} `, `${word.answer}`, `${taskNote}`);
+    setTimeout(() => { $('#getTenses').focus(); }, 500);
   });
 });
 $('#translate').click(() => {
@@ -176,6 +209,7 @@ $('#translate').click(() => {
     let word = res.dictionary.words[i];
     let second = word.second ? word.second : '';
     setInfo(`${taskName}${word.english}`, `${word.first},${second}`, `${taskNote}`);
+    setTimeout(() => { $('#answer').focus(); }, 500);
   });
 });
 $('#transcription').click(() => {
@@ -189,6 +223,7 @@ $('#transcription').click(() => {
     const word = res[i].word;
     const transcription = res[i].transcription;
     setInfo(`${taskName} : ${transcription}`, `${word}`, `${taskNote}`);
+    setTimeout(() => { $('#answer').focus(); }, 500);
   });
 });
 
@@ -204,6 +239,7 @@ $('#createWords').click(() => {
     const word = res[i].word;
     const answer = res[i].answer;
     setInfo(`${taskName} : ${word} <br> Sentence : <br> ${sentence}`, `${answer}`, `${taskNote}`);
+    setTimeout(() => { $('#answer').focus(); }, 500);
   });
 });
 $('#listening').click(() => {
@@ -222,6 +258,7 @@ $('#listening').click(() => {
     utterThis.volume = 5;
     utterThis.rate = 0.5;
     synth.speak(utterThis);
+    setTimeout(() => { $('#answer').focus(); }, 500);
   });
 });
 $('#dragAndDrop').click(() => {
@@ -253,6 +290,7 @@ $('#NOD').click(() => {
   let second;
   [taskNote, taskName, result, first, second] = getGreatestCommonFactor();
   setInfo(`${taskName}${first} & ${second}`, `${result}`, `${taskNote}`);
+  setTimeout(() => { $('#answer').focus(); }, 500);
 });
 $('#NOK').click(() => {
   sessionStorage.setItem('task', 'NOK');
@@ -263,6 +301,7 @@ $('#NOK').click(() => {
   let second;
   [taskNote, taskName, result, first, second] = getLeastCommonMultiple();
   setInfo(`${taskName}${first} & ${second}`, `${result}`, `${taskNote}`);
+  setTimeout(() => { $('#answer').focus(); }, 500);
 });
 $('#comparison').click(() => {
   sessionStorage.setItem('task', 'comparison');
@@ -273,6 +312,7 @@ $('#comparison').click(() => {
   let b;
   [taskNote, taskName, sign, a, b] = compareTwoNumbers();
   setInfo(`${taskName}${a} & ${b}`, `${sign}`, `${taskNote}`);
+  setTimeout(() => { $('#answer').focus(); }, 500);
 });
 $('#submitName').click(() => {
   $('.heroName').html($('#nickNameInput').val());
