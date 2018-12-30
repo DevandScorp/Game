@@ -1,3 +1,4 @@
+@import url('https://fonts.googleapis.com/css?family=Source+Code+Pro');
 html, body {
     margin: 0;
     padding: 0;
@@ -19,10 +20,13 @@ body {
 .clicked {
     background-color: #db363c;
 }
+.tooltip {
+    font-family: 'Source Code Pro', monospace;
+}
 canvas {
     display: block;
     margin: auto;
-
+    z-index:2;
     position: absolute;
     top: 0;
     bottom: 0;

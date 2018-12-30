@@ -9,9 +9,6 @@ import makeASound from '../../game/js/musicHandler';
 Header.draw();
 Main.draw();
 Footer.draw();
-$('document').ready(() => {
-  makeASound('../landing-page/sounds/Audiomachine - Wars of Faith(playvk.com).mp3');
-});
 $('a').click(() => {
   makeASound('../landing-page/sounds/click.wav');
 });
