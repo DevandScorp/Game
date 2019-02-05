@@ -13,16 +13,16 @@ export default function getScoreTable() {
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    <% for(let i = 0;i<Object.keys(scoreTable).length;++i) {%>
+                                    <% for(let i = 0;i<scoreTable.length;++i) {%>
                                         <tr>
                                             <th scope="row"><%= i+1 %></th>
-                                            <td><%= Object.keys(scoreTable)[i] %></td>
-                                            <td><%= scoreTable[Object.keys(scoreTable)[i]] %></td>
+                                            <td><%= scoreTable[i].name %></td>
+                                            <td><%= scoreTable[i].score %></td>
                                         </tr>
                                     <% } %>
                                 </tbody>
                                 </table>
                         `;
-  const template = _.template(templateSource)({ scoreTable: scoreTableData });
+  const template = _.template(templateSource);
   return template;
 }

@@ -20,6 +20,7 @@ export default class FightInterface {
     this.isDamaged = false;
     this.isHealed = false;
     this.currentPlayerName = '';
+    this.currentScore = 0;
     this.player = {
       sprite: new Sprite('img/knight.png', [0, 0], [256, 256], 10, [0, 1, 2, 3, 4, 5, 6]),
     };
@@ -132,14 +133,25 @@ export default class FightInterface {
       }
     }
     if (!this.heroHealth) {
-      $('#scoreTable div.modal-body').html(getScoreTable());
-      $('#scoreTable').modal('show');
+      const myHeaders = new Headers();
+      myHeaders.append('Content-Type', 'application/json');
+      fetch('https://limitless-beach-30657.herokuapp.com/score', {
+        method: 'POST',
+        headers: myHeaders,
+        body: JSON.stringify({
+          name: this.currentPlayerName,
+          score: this.currentScore,
+        }),
+      }).then(res => res.json()).then((res) => {
+        this.currentScore = 0;
+        $('#scoreTable div.modal-body').html(getScoreTable()({ scoreTable: res }));
+        $('#scoreTable').modal('show');
+        console.log(res);
+      });
       this.reset();
     }
     if (!this.orkHealth) {
-      const players = JSON.parse(sessionStorage.getItem('players'));
-      players[this.currentPlayerName] += 100;
-      sessionStorage.setItem('players', JSON.stringify(players));
+      this.currentScore += 100;
       this.reset();
     }
   }
