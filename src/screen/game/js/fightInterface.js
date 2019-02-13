@@ -135,7 +135,7 @@ export default class FightInterface {
     if (!this.heroHealth) {
       const myHeaders = new Headers();
       myHeaders.append('Content-Type', 'application/json');
-      fetch('https://limitless-beach-30657.herokuapp.com/score', {
+      fetch('https://murmuring-fortress-42045.herokuapp.com/score', {
         method: 'POST',
         headers: myHeaders,
         body: JSON.stringify({
