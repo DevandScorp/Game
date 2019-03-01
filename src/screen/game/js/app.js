@@ -46,6 +46,14 @@ $(document).ready(() => {
   }
   setTimeout(() => { $('#nickNameInput').focus(); }, 500);
   sessionStorage.setItem('players', JSON.stringify(players));
+  const myHeaders = new Headers();
+  myHeaders.append('Content-Type', 'application/json');
+  fetch('https://murmuring-fortress-42045.herokuapp.com/score', {
+    method: 'GET',
+    headers: myHeaders,
+  }).then(res => res.json()).then((res) => {
+    console.log(res);
+  });
 });
 
 let lastTime = 0;
