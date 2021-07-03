@@ -1,0 +1,64 @@
+{
+  "name": "game",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "jest",
+    "build": "webpack -p",
+    "start": "webpack-dev-server"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/DevandScorp/Game.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/DevandScorp/Game/issues"
+  },
+  "homepage": "https://github.com/DevandScorp/Game#readme",
+  "devDependencies": {
+    "@babel/core": "^7.1.6",
+    "@babel/preset-env": "^7.1.6",
+    "babel-core": "^7.0.0-bridge.0",
+    "babel-jest": "^23.6.0",
+    "babel-loader": "^8.0.4",
+    "css-loader": "^1.0.1",
+    "eslint": "^5.9.0",
+    "eslint-config-airbnb-base": "^13.1.0",
+    "eslint-plugin-import": "^2.14.0",
+    "html-loader": "^0.5.5",
+    "html-webpack-plugin": "^3.2.0",
+    "jest": "^23.6.0",
+    "style-loader": "^0.23.1",
+    "webpack": "^4.26.0",
+    "webpack-cli": "^3.1.2",
+    "webpack-dev-server": "^3.1.10"
+  },
+  "dependencies": {
+    "bootstrap": "^4.1.3",
+    "es6-promise": "^4.2.5",
+    "fetch-mock": "^7.2.7",
+    "isomorphic-fetch": "^2.2.1",
+    "jest-fetch-mock": "^2.1.0",
+    "jquery": "^3.3.1",
+    "lodash": "^4.17.11",
+    "popper.js": "^1.14.6",
+    "regenerator-runtime": "^0.11.1",
+    "webpack-jquery-ui": "^2.0.1",
+    "whatwg-fetch": "^3.0.0"
+  },
+  "jest": {
+    "automock": false,
+    "setupFiles": [
+      "./src/jestSetup/setup.js"
+    ],
+    "transform": {
+      "^.+\\.jsx?$": "babel-jest"
+    },
+    "testPathIgnorePatterns": [
+      "<rootDir>/node_modules/"
+    ]
+  }
+}

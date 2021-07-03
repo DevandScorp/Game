@@ -1,0 +1,84 @@
+@import url('https://fonts.googleapis.com/css?family=Source+Code+Pro');
+html, body {
+    margin: 0;
+    padding: 0;
+}
+body {
+    background: url("./../img/game_background_4.png") no-repeat;
+    -moz-background-size: 100%; /* Firefox 3.6+ */
+    -webkit-background-size: 100%; /* Safari 3.1+ и Chrome 4.0+ */
+    -o-background-size: 100%; /* Opera 9.6+ */
+    background-size: 100%;
+}
+.btn-group {
+    width:50%;
+    
+}
+#attack, #heal {
+    width:100%;
+}
+.clicked {
+    background-color: #db363c;
+}
+.tooltip {
+    font-family: 'Source Code Pro', monospace;
+}
+canvas {
+    display: block;
+    margin: auto;
+    z-index:2;
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+}
+.lives{
+    margin-top: 20px;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+}
+.taskButton {
+    height: 96px;
+    width: 96px;
+    background-color: white;
+    border: 2px solid  #ea9194;
+    color: white;
+    text-align: center;
+    border-radius: 50%;
+}
+.heroesWrapper {
+    width:40%;
+}
+.fightButtonClass {
+    margin-top: 10px;
+    text-align:center;
+    width:20%;
+}
+.orkLife, .heroLife {
+    margin: auto;
+    border-radius:5px;
+    border:2px solid #ea9194;
+    height: 50px;
+    background-color: #db363c;
+    text-align: center;
+    padding-top: 10px;
+    line-height: 30px;
+    color: white;
+    box-sizing: border-box;
+}
+.heroName, .orkName {
+    text-align: center;
+    font-size: 30px;
+    font-family: 'Staatliches', cursive;
+}
+#sortable { 
+    height: 35px; padding: auto;
+}
+#sortable > div { 
+    float: left;
+}
+#sortable div { 
+    width: 25px; height: 35px; padding: 0.5em; margin:5px;
+}

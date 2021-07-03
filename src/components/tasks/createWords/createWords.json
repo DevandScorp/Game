@@ -1,0 +1,9 @@
+[
+    {"sentence": "All people afraid of becoming ... one day","word": "employment","answer": "unemployed"},
+    {"sentence": "Although circumstances limit one's ... there are still more possibilities than most people realise",
+        "word": "choose","answer": "choice"},
+    {"sentence": "... interests,such as love of travel or computers may point the way to a job","word": "person","answer": "personal"},
+    {"sentence": "My boss was more ... at organizing people","word": "thought","answer": "thoughtful"},
+    {"sentence": "He knows I'm absolutely ... at working under pressure like that","word": "use","answer": "useless"},
+    {"sentence": "I wanted to come to Edinburgh both because the town is ...","word": "attract","answer": "attractive"}
+]
